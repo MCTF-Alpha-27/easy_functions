@@ -1,5 +1,5 @@
 ﻿# easy_functions模块问题反馈区
- 你可以在这里反馈easy_functions模块的bug，或提出建议等
+ 你可以在这里反馈easy_functions模块的bug，提出建议等
  <br/>这里只会存放最新版本的代码
  # 介绍
 <br/>从它的名字就可以看出，这就是一个简单但很实用的模块
