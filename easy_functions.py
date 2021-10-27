@@ -4,15 +4,13 @@ easy_functions是一个简单但实用的Python模块，可以通过import文件
 已经开发了许多功能，目前还在继续开发新的功能
 本模块使用MIT协议
 """
-更新状态 = '活跃'
-
 cmdlist = [
     'bigfont','literally','wait','cls',
     'title','find_file','start','call',
     'Vbs','color','mode','shield',
     'choice','Code','mkdir','copy',
     'pause','find_suffix','help','helpcmd',
-    'version','log'
+    'update','version','log'
 ] #命令列表，以大写字母开头的为类(class)
 __all__ = cmdlist
 c = 0
@@ -21,11 +19,10 @@ for i in cmdlist:
     if i.istitle():
         c += 1
 d = len(cmdlist) - c
-__version__ = str(c) + '.' + str(d) + '.' + '79' #easy_functions版本号
+__version__ = str(c) + '.' + str(d) + '.' + '80' #easy_functions版本号
 __author__ = 'Jerry\n我的QQ号：2711893794' #作者
 class FunctionSyntaxError(Exception): #异常
-    def __init__(self, *error):
-        pass
+    pass
 def bigfont( name ): #大字显示
     lngth = len(name) 
     l = ""
@@ -484,6 +481,13 @@ def find_suffix(path, suffix): #查找指定后缀的文件
             file_list.append(i.replace('\n',''))
     os.remove(tmp)
     return file_list
+def update(): #更新本模块 [Beta版]
+    import os
+    if not os.system("pip --version") == 0:
+        print("pip.exe似乎出现了一些问题\n请检查环境变量以及pip.exe是否损坏")
+        return
+    if os.system("pip install --upgrade easy_functions") == 0:
+        print("已更新至版本%s"%__version__)
 def log(): #更新日志
     print('')
     print('作者决定，从2021-3-21起开始记录本模块的更新')
@@ -611,6 +615,12 @@ def log(): #更新日志
     print('[2021-9-29] [1条更新]')
     print('1.修复了功能find_suffix关于批处理的bug')
     print('')
+    print("[2021-10-26] [1条更新]")
+    print("[Beta]1.增加了update功能，具体请使用helpcmd()查看")
+    print("")
+    print("[2021-10-27] [1条更新]")
+    print("1.修复了函数update的帮助文字的问题")
+    print("")
     return
 def version(): #版本
     global __version__
@@ -785,6 +795,12 @@ def helpcmd( cmd ): #文件命令功能解释
         print('<',cmd,'>','后缀查找功能')
         print("用法：文件名或<import...as...>命令别名.find_suffix('文件夹路径','后缀')")
         print('将遍历文件夹中所有指定后缀的文件，以列表形式返回')
+        return
+    if cmd == "update":
+        print("<",cmd,">","自动更新功能")
+        print("用法：文件名或<import...as...>命令别名.update()")
+        print("将自动检测模块的更新，有则更新")
+        print("警告：此函数属于Beta版本，可能存在未知问题。")
         return
     if cmd == 'log':
         print('<',cmd,'>','更新日志查看功能')
