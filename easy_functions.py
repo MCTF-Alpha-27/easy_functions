@@ -1,5 +1,4 @@
 ﻿"""声明
-本模块在2020-12-27被创建
 easy_functions是一个简单但实用的Python模块，可以通过import文件里的def函数和类(class)来达到简化代码运行的效果
 已经开发了许多功能，目前还在继续开发新的功能
 本模块使用MIT协议
@@ -10,8 +9,9 @@ cmdlist = [
     'Vbs','color','mode','shield',
     'choice','Code','mkdir','copy',
     'pause','find_suffix','help','helpcmd',
-    'update','version','log'
-] #命令列表，以大写字母开头的为类(class)
+    'update','getIP'
+    ,'version','log'
+] # 命令列表，以大写字母开头的为类(class)
 __all__ = cmdlist
 c = 0
 d = 0
@@ -19,11 +19,11 @@ for i in cmdlist:
     if i.istitle():
         c += 1
 d = len(cmdlist) - c
-__version__ = str(c) + '.' + str(d) + '.' + '80' #easy_functions版本号
-__author__ = 'Jerry\n我的QQ号：2711893794' #作者
-class FunctionSyntaxError(Exception): #异常
+__version__ = str(c) + '.' + str(d) + '.' + '80' # 版本号
+__author__ = 'Jerry\n我的QQ号：2711893794' # 作者
+class FunctionSyntaxError(Exception): # 异常
     pass
-def bigfont( name ): #大字显示
+def bigfont( name ): # 大字显示
     lngth = len(name) 
     l = ""
     for x in range(0, lngth): 
@@ -140,7 +140,7 @@ def bigfont( name ): #大字显示
         elif (c == "."): 
             print("----..----\n\n")
     return
-def literally(text, wait=0.1): #逐字显示
+def literally(text, wait=0.1): # 逐字显示
     try:
         wait + 1
     except TypeError as e:
@@ -155,7 +155,7 @@ def literally(text, wait=0.1): #逐字显示
         sys.stdout.flush()
         time.sleep(wait)
     return
-def wait(wait=1): #等待功能
+def wait(wait=1): # 等待功能
     import time
     try:
         time.sleep(wait)
@@ -164,15 +164,15 @@ def wait(wait=1): #等待功能
             '你输入的值%s不符合运行要求，请输入数字'%type(wait)
         ) from e
     return
-def cls(): #清除屏幕功能
+def cls(): # 清除屏幕功能
     import os
     os.system('cls')
     return
-def title( title ): #更改标题
+def title( title ): # 更改标题
     import os
     os.system("title " + title)
     return
-def find_file(file, mode): #检测文件是否存在
+def find_file(file, mode): # 检测文件是否存在
     if not type(file) == type('str'):
         raise FunctionSyntaxError(
             '需要输入字符串，而你输入的是%s'%type(file)
@@ -196,13 +196,13 @@ def find_file(file, mode): #检测文件是否存在
         raise FunctionSyntaxError(
             '没有模式"%s"'%mode
         )
-def start( path ): #文件运行
+def start( path ): # 文件运行
     import os
     return os.system("start " + path)
-def call( path ): #文件调用
+def call( path ): # 文件调用
     import os
     return os.system("call " + path)
-class Vbs: #创建并调用弹窗，类用法(class)
+class Vbs: # 创建并调用弹窗，类用法(class)
     def __init__( self ):
         import tempfile
         self.path = tempfile.gettempdir() + '\\easy_functionsMSG.vbs'
@@ -266,7 +266,7 @@ class Vbs: #创建并调用弹窗，类用法(class)
             f.write('"' + title + '"')
             f.write('))')
         return call(self.path)
-    def infoaskcancel(self, title='easy_functions msgbox', message='模块easy_functions，简单，实用', *chr13): #显示信息图标并提供[确认]和[取消]
+    def infoaskcancel(self, title='easy_functions msgbox', message='模块easy_functions，简单，实用', *chr13): # 显示信息图标并提供[确认]和[取消]
         title = title.replace('\n','')
         message = message.replace('\n','')
         title = title.replace('\r','')
@@ -286,7 +286,7 @@ class Vbs: #创建并调用弹窗，类用法(class)
             f.write('"' + title + '"')
             f.write('))')
         return call(self.path)
-    def warningaskyesno(self, title='easy_functions msgbox', message='模块easy_functions，简单，实用', *chr13): #显示警告图标并提供[是]和[否]
+    def warningaskyesno(self, title='easy_functions msgbox', message='模块easy_functions，简单，实用', *chr13): # 显示警告图标并提供[是]和[否]
         title = title.replace('\n','')
         message = message.replace('\n','')
         title = title.replace('\r','')
@@ -306,7 +306,7 @@ class Vbs: #创建并调用弹窗，类用法(class)
             f.write('"' + title + '"')
             f.write('))')
         return call(self.path)
-    def errorretry(self, title='easy_functions msgbox', message='模块easy_functions，简单，实用', *chr13): #显示错误图标并提供[重试]和[取消]
+    def errorretry(self, title='easy_functions msgbox', message='模块easy_functions，简单，实用', *chr13): # 显示错误图标并提供[重试]和[取消]
         title = title.replace('\n','')
         message = message.replace('\n','')
         title = title.replace('\r','')
@@ -326,7 +326,7 @@ class Vbs: #创建并调用弹窗，类用法(class)
             f.write('"' + title + '"')
             f.write('))')
         return call(self.path)
-def color( color ): #更改颜色
+def color( color ): # 更改颜色
     import os
     colorfontlist = ['0','1','2','3','4','5','6','7']
     colorbacklist = ['8','9','a','b','c','d','e','f']
@@ -361,7 +361,7 @@ def color( color ): #更改颜色
             '不支持2个以上的颜色编码"%s"'%color
         )
     return
-def mode(cols, lines): #更改cmd外框大小
+def mode(cols, lines): # 更改cmd外框大小
     import os
     try:
         int(str(cols))
@@ -380,7 +380,7 @@ def mode(cols, lines): #更改cmd外框大小
     else:
         l = str(lines)
     return os.system('mode con cols=' + c + ' lines=' + l)
-def shield(words, WordsBlackList): #词语屏蔽
+def shield(words, WordsBlackList): # 词语屏蔽
     A_list = ['*','**','***','****','*****','******','*******','********','*********','**********','***********','************']
     try:
         WordsBlackList.append('test')
@@ -394,7 +394,7 @@ def shield(words, WordsBlackList): #词语屏蔽
             length = len(i) - 1
             words = words.replace(i, A_list[length])
     return words
-def choice(choose='YN', text='Y/N', default='False', timeout='10', *, hide=False): #按键选择功能
+def choice(choose='YN', text='Y/N', default='False', timeout='10', *, hide=False): # 按键选择功能
     import os
     choice = 'choice '
     choice = choice + ' /C '
@@ -416,7 +416,7 @@ def choice(choose='YN', text='Y/N', default='False', timeout='10', *, hide=False
                 '按键默认值不在设置的按键中'
             )
     return os.system(choice)
-class Code: #加密英文
+class Code: # 加密英文
     def __init__( self ):
         self.WordsComparison = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
         self.NumberComparison = ['а','б','в','г','д','е','ё','ж','з','и','й','к','л','м','н','о','п','р','с','Я','Ч','Ш','Щ','ц','ю','э']
@@ -434,22 +434,22 @@ class Code: #加密英文
         for i in range(26):
             text = text.replace(self.NumberCapsComparison[i], self.WordsCapsComparison[i])
         return text
-def mkdir( path ): #新建文件夹
+def mkdir( path ): # 新建文件夹
     import os
     return os.system('mkdir ' + path)
-def copy(filein, fileout): #文件复制功能
+def copy(filein, fileout): # 文件复制功能
     import os
     if not find_file(filein,'exist?'):
         raise FileNotFoundError(
             '没有名为%s的文件'%filein
         )
     return os.system('copy ' + filein + ' ' + fileout + ' ' + '>nul')
-def pause(text='请按任意键继续...'): #暂停功能
+def pause(text='请按任意键继续...'): # 暂停功能
     import os
     print(text)
     os.system('pause >nul')
     return
-def find_suffix(path, suffix): #查找指定后缀的文件
+def find_suffix(path, suffix): # 查找指定后缀的文件
     import os
     import tempfile
     bat = tempfile.gettempdir() + '\\make_file_list.bat'
@@ -481,16 +481,19 @@ def find_suffix(path, suffix): #查找指定后缀的文件
             file_list.append(i.replace('\n',''))
     os.remove(tmp)
     return file_list
-def update(): #更新本模块 [Beta版]
+def update(): # 更新本模块
     import os
     if not os.system("pip --version") == 0:
         print("pip.exe似乎出现了一些问题\n请检查环境变量以及pip.exe是否损坏")
         return
     if os.system("pip install --upgrade easy_functions") == 0:
-        print("已更新至版本%s"%__version__)
-def log(): #更新日志
-    print('')
-    print('作者决定，从2021-3-21起开始记录本模块的更新')
+        print("已更新最新版本")
+def getIP(): # 获取本机IP
+    import socket
+    hostname = socket.gethostname()
+    IP = socket.gethostbyname(hostname)
+    return IP
+def log(): # 更新日志
     print('')
     print('[2021-3-21] [3条更新]')
     print('1.增加log()函数，可用于查看本模块的更新日志，日志从2021-3-21开始记录')
@@ -621,15 +624,19 @@ def log(): #更新日志
     print("[2021-10-27] [1条更新]")
     print("1.修复了函数update的帮助文字的问题")
     print("")
+    print("[2021-11-1] [2条更新]")
+    print("1.增加了getIP功能，具体请使用helpcmd()查看")
+    print("2.update命令更新至正式版")
+    print("")
     return
-def version(): #版本
+def version(): # 版本
     global __version__
     print('easy_functions版本:%s'%__version__)
     print('%s个函数'%(__version__[2] + __version__[3]))
     print('%s个类'%__version__[0])
     print('%s个微调'%(__version__[5] + __version__[6]))
     return
-def help(): #文件命令功能列表
+def help(): # 文件命令功能列表
     x = len(cmdlist)
     print('easy_functions创建日期:2020-12-27')
     print('easy_functions版本:',__version__)
@@ -639,7 +646,7 @@ def help(): #文件命令功能列表
     print("查看某功能的详细用法请输入：文件名或<import...as...>命令别名.helpcmd('功能')")
     print("查看所有功能的详细用法请输入：文件名或<import...as...>命令别名.helpcmd('all')，将逐一解释每个功能")
     return
-def helpcmd( cmd ): #文件命令功能解释
+def helpcmd( cmd ): # 文件命令功能解释
     if cmd == 'bigfont':
         print('<',cmd,'>','大字显示功能')
         print("用法：文件名或<import...as...>命令别名.bigfont('字母、空格或点')")
@@ -800,7 +807,11 @@ def helpcmd( cmd ): #文件命令功能解释
         print("<",cmd,">","自动更新功能")
         print("用法：文件名或<import...as...>命令别名.update()")
         print("将自动检测模块的更新，有则更新")
-        print("警告：此函数属于Beta版本，可能存在未知问题。")
+        return
+    if cmd == "getIP":
+        print("<",cmd,">","本机IP查看功能")
+        print("用法：文件名或<import...as...>命令别名.getIP()")
+        print("将返回本机IP")
         return
     if cmd == 'log':
         print('<',cmd,'>','更新日志查看功能')
