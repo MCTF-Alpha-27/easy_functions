@@ -19,7 +19,7 @@ for i in cmdlist:
     if i.istitle():
         c += 1
 d = len(cmdlist) - c
-__version__ = str(c) + '.' + str(d) + '.' + '80' # 版本号
+__version__ = str(c) + '.' + str(d) + '.' + '81' # 版本号
 __author__ = 'Jerry\n我的QQ号：2711893794' # 作者
 class FunctionSyntaxError(Exception): # 异常
     pass
@@ -487,7 +487,7 @@ def update(): # 更新本模块
         print("pip.exe似乎出现了一些问题\n请检查环境变量以及pip.exe是否损坏")
         return
     if os.system("pip install --upgrade easy_functions") == 0:
-        print("已更新最新版本")
+        print("已是最新版本")
 def getIP(): # 获取本机IP
     import socket
     hostname = socket.gethostname()
@@ -628,6 +628,9 @@ def log(): # 更新日志
     print("1.增加了getIP功能，具体请使用helpcmd()查看")
     print("2.update命令更新至正式版")
     print("")
+    print("[2021-11-13] [1条更新]")
+    print("1.对部分帮助文字进行了微调")
+    print("")
     return
 def version(): # 版本
     global __version__
@@ -756,7 +759,7 @@ def helpcmd( cmd ): # 文件命令功能解释
         return
     if cmd == 'choice':
         print('<',cmd,'>','按键选择功能')
-        print("用法：文件名或<import...as...>命令别名.choice('用户可选的按键','显示的文字','默认按键选择(可填)','多少秒后默认按键生效(必须先指定默认按键，默认为0)'),'hide=True/False 是否隐藏选项列表)'")
+        print("用法：文件名或<import...as...>命令别名.choice('用户可选的按键','显示的文字','默认按键选择(可填)','多少秒后默认按键生效(必须先指定默认按键，默认为0)'),'hide=True/False'(是否隐藏选项列表))")
         print('显示的文字中不能含有空格')
         print('可以写成：变量 = 文件名或<import...as...>命令别名.choice()')
         print('如果这样写，用户所选择的按键就会变为返回值存储在变量中')
