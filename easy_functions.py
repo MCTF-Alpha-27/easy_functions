@@ -3,11 +3,16 @@ easy_functions是一个简单但实用的Python模块，可以通过import文件
 已经开发了许多功能，目前还在继续开发新的功能
 本模块使用MIT协议
 """
+import os
+import sys
+import time
+import socket
+import tempfile
 cmdlist = [
     'bigfont','literally','wait','cls',
     'title','find_file','start','call',
     'Vbs','color','mode','shield',
-    'choice','Code','mkdir','copy',
+    'choice','Cipher','mkdir','copy',
     'pause','find_suffix','help','helpcmd',
     'update','getIP'
     ,'version','log'
@@ -19,7 +24,7 @@ for i in cmdlist:
     if i.istitle():
         c += 1
 d = len(cmdlist) - c
-__version__ = str(c) + '.' + str(d) + '.' + '81' # 版本号
+__version__ = str(c) + '.' + str(d) + '.' + '82' # 版本号
 __author__ = 'Jerry\n我的QQ号：2711893794' # 作者
 class FunctionSyntaxError(Exception): # 异常
     pass
@@ -147,7 +152,6 @@ def literally(text, wait=0.1): # 逐字显示
         raise FunctionSyntaxError(
             '你输入的值%s不符合运行要求，请输入数字'%type(wait)
         ) from e
-    import sys, time
     sys.stdout.write("\n " + " " * 60 + "\r")
     sys.stdout.flush()
     for c in text:
@@ -156,7 +160,6 @@ def literally(text, wait=0.1): # 逐字显示
         time.sleep(wait)
     return
 def wait(wait=1): # 等待功能
-    import time
     try:
         time.sleep(wait)
     except TypeError as e:
@@ -165,11 +168,9 @@ def wait(wait=1): # 等待功能
         ) from e
     return
 def cls(): # 清除屏幕功能
-    import os
     os.system('cls')
     return
 def title( title ): # 更改标题
-    import os
     os.system("title " + title)
     return
 def find_file(file, mode): # 检测文件是否存在
@@ -197,14 +198,11 @@ def find_file(file, mode): # 检测文件是否存在
             '没有模式"%s"'%mode
         )
 def start( path ): # 文件运行
-    import os
     return os.system("start " + path)
 def call( path ): # 文件调用
-    import os
     return os.system("call " + path)
 class Vbs: # 创建并调用弹窗，类用法(class)
     def __init__( self ):
-        import tempfile
         self.path = tempfile.gettempdir() + '\\easy_functionsMSG.vbs'
     def shownormal(self, title='easy_functions msgbox', message='模块easy_functions，简单，实用', *chr13): #无图标
         title = title.replace('\n','')
@@ -327,7 +325,6 @@ class Vbs: # 创建并调用弹窗，类用法(class)
             f.write('))')
         return call(self.path)
 def color( color ): # 更改颜色
-    import os
     colorfontlist = ['0','1','2','3','4','5','6','7']
     colorbacklist = ['8','9','a','b','c','d','e','f']
     try:
@@ -362,7 +359,6 @@ def color( color ): # 更改颜色
         )
     return
 def mode(cols, lines): # 更改cmd外框大小
-    import os
     try:
         int(str(cols))
     except ValueError as e:
@@ -395,7 +391,6 @@ def shield(words, WordsBlackList): # 词语屏蔽
             words = words.replace(i, A_list[length])
     return words
 def choice(choose='YN', text='Y/N', default='False', timeout='10', *, hide=False): # 按键选择功能
-    import os
     choice = 'choice '
     choice = choice + ' /C '
     for i in range(len(text)):
@@ -416,7 +411,7 @@ def choice(choose='YN', text='Y/N', default='False', timeout='10', *, hide=False
                 '按键默认值不在设置的按键中'
             )
     return os.system(choice)
-class Code: # 加密英文
+class Cipher: # 加密英文
     def __init__( self ):
         self.WordsComparison = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
         self.NumberComparison = ['а','б','в','г','д','е','ё','ж','з','и','й','к','л','м','н','о','п','р','с','Я','Ч','Ш','Щ','ц','ю','э']
@@ -435,23 +430,18 @@ class Code: # 加密英文
             text = text.replace(self.NumberCapsComparison[i], self.WordsCapsComparison[i])
         return text
 def mkdir( path ): # 新建文件夹
-    import os
     return os.system('mkdir ' + path)
 def copy(filein, fileout): # 文件复制功能
-    import os
     if not find_file(filein,'exist?'):
         raise FileNotFoundError(
             '没有名为%s的文件'%filein
         )
     return os.system('copy ' + filein + ' ' + fileout + ' ' + '>nul')
 def pause(text='请按任意键继续...'): # 暂停功能
-    import os
     print(text)
     os.system('pause >nul')
     return
 def find_suffix(path, suffix): # 查找指定后缀的文件
-    import os
-    import tempfile
     bat = tempfile.gettempdir() + '\\make_file_list.bat'
     tmp = tempfile.gettempdir() + '\\maker.tmp'
     file_list = []
@@ -482,17 +472,38 @@ def find_suffix(path, suffix): # 查找指定后缀的文件
     os.remove(tmp)
     return file_list
 def update(): # 更新本模块
-    import os
     if not os.system("pip --version") == 0:
         print("pip.exe似乎出现了一些问题\n请检查环境变量以及pip.exe是否损坏")
         return
     if os.system("pip install --upgrade easy_functions") == 0:
         print("已是最新版本")
 def getIP(): # 获取本机IP
-    import socket
     hostname = socket.gethostname()
     IP = socket.gethostbyname(hostname)
     return IP
+class Environment: # 操作环境变量
+    def __init__(self, value): # 输入环境变量
+        self.value = value
+        self.bat_path = tempfile.gettempdir() + "\\get_environment.bat"
+        self.key_path = tempfile.gettempdir() + "\\key.log"
+    def set(self, key): # 修改环境变量
+        os.system("setx %s %s"%(self.value, key))
+    def get(self): # 获取环境变量的值
+        with open(self.bat_path, "w") as f:
+            f.write("")
+        with open(self.bat_path, "a") as f:
+            f.write("@echo off \n")
+            f.write("echo %s>%s"%(self.value, self.key_path))
+            f.flush()
+        call(self.bat_path)
+        wait(0.5)
+        with open(self.key_path, "r") as f:
+            key = f.read().strip("\n")
+        os.remove(self.bat_path)
+        os.remove(self.key_path)
+        return key
+    def delete(self): # 删除环境变量
+        os.system("setx %s """%self.value)
 def log(): # 更新日志
     print('')
     print('[2021-3-21] [3条更新]')
@@ -507,7 +518,7 @@ def log(): # 更新日志
     print("1.修改了功能Vbs的使用方法，不再强制需要使用(title='标题',text='正文')的写法了，同时该功能的语法发生改变，具体请使用helpcmd()功能查看")
     print('')
     print('[2021-3-28] [2条更新]')
-    print('1.修改了功能Code的用法，具体请使用helpcmd()查看')
+    print('1.修改了功能Cipher的用法，具体请使用helpcmd()查看')
     print('2.添加了在用户直接打开文件而不是调用文件的时候，将运行help()')
     print('')
     print('[2021-4-3] [1条更新]')
@@ -630,6 +641,9 @@ def log(): # 更新日志
     print("")
     print("[2021-11-13] [1条更新]")
     print("1.对部分帮助文字进行了微调")
+    print("")
+    print("[2021-12-19] [1条更新]")
+    print("1.将功能Code更名为Cipher")
     print("")
     return
 def version(): # 版本
@@ -773,12 +787,12 @@ def helpcmd( cmd ): # 文件命令功能解释
         print('如果检测到错误状态，该功能会返回255')
         print('如果用户按下的键不是有效的选择，电脑会发出警告响声(如果在音量合成器里启用了系统声音)')
         return
-    if cmd == 'Code':
+    if cmd == 'Cipher':
         print('<',cmd,'>','文字加密功能')
-        print("用法：变量 = 文件名或<import...as...>命令别名.Code()")
+        print("用法：变量 = 文件名或<import...as...>命令别名.Cipher()")
         print("      变量.lock('明文')/unlock('密文')")
         print('本功能有一套自己的独立加密算法，可以把输入的字母转换成不可阅读的文字')
-        print('类Code现接受以下参数：')
+        print('类Cipher现接受以下参数：')
         print('变量.lock()-加密文字')
         print('变量.unlock()-解密文字')
         print('注意：本功能只能加密英文')
