@@ -15,8 +15,8 @@
 # 了解helpcmd()命令
 这是本模块自带的解释功能，堪比命令提示符一样清晰的解释！
 <br/>你可以很清楚地知道每一个命令的功能以及它们的语法
-<br/>使用easy_functions.helpcmd('命令')解释单个命令
-<br/>easy_functions.helpcmd('all')解释所有命令
+<br/>使用easy_functions.helpcmd("命令")解释单个命令
+<br/>easy_functions.helpcmd("all")解释所有命令
 # 最后
 如果对本模块有建议一定要告诉我啊，我也是第一次写模块
 <br/>请在GitHub反馈问题
