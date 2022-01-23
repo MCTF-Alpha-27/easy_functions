@@ -13,7 +13,7 @@ cmdlist = [
     'title','find_file','start','call',
     'Vbs','color','mode','shield',
     'choice','Cipher','mkdir','copy',
-    'pause','find_suffix','help','helpcmd',
+    'pause','find_suffix','help','Environment<Beta>',
     'update','getIP'
     ,'version','log'
 ] # 命令列表，以大写字母开头的为类(class)
@@ -24,11 +24,15 @@ for i in cmdlist:
     if i.istitle():
         c += 1
 d = len(cmdlist) - c
-__version__ = str(c) + '.' + str(d) + '.' + '82' # 版本号
+__version__ = str(c) + '.' + str(d) + '.' + '83' # 版本号
 __author__ = 'Jerry\n我的QQ号：2711893794' # 作者
 class FunctionSyntaxError(Exception): # 异常
     pass
 def bigfont( name ): # 大字显示
+    """
+    大字显示功能
+    用法：文件名或<import...as...>命令别名.bigfont('字母、空格或点')
+    """
     lngth = len(name) 
     l = ""
     for x in range(0, lngth): 
@@ -146,6 +150,10 @@ def bigfont( name ): # 大字显示
             print("----..----\n\n")
     return
 def literally(text, wait=0.1): # 逐字显示
+    """
+    逐字显示功能
+    用法：文件名或<import...as...>命令别名.literally('文字',显示间隔时间)
+    """
     try:
         wait + 1
     except TypeError as e:
@@ -160,6 +168,10 @@ def literally(text, wait=0.1): # 逐字显示
         time.sleep(wait)
     return
 def wait(wait=1): # 等待功能
+    """
+    等待功能
+    用法：文件名或<import...as...>命令别名.wait(持续的时间)
+    """
     try:
         time.sleep(wait)
     except TypeError as e:
@@ -167,13 +179,28 @@ def wait(wait=1): # 等待功能
             '你输入的值%s不符合运行要求，请输入数字'%type(wait)
         ) from e
     return
-def cls(): # 清除屏幕功能
+def cls(): # 清除命令行
+    """
+    清除命令行功能
+    用法：文件名或<import...as...>命令别名.cls()
+    """
     os.system('cls')
     return
 def title( title ): # 更改标题
+    """
+    更改命令行标题功能
+    用法：文件名或<import...as...>命令别名.title('标题')
+    """
     os.system("title " + title)
     return
 def find_file(file, mode): # 检测文件是否存在
+    """
+    文件查找功能
+    用法：文件名或<import...as...>命令别名.find_file('文件路径','模式')")
+    共有两种模式可用：
+    1."exist?"判断文件是否存在，返回布尔值
+    2."import?"判断文件是否可以被导入，返回布尔值
+    """
     if not type(file) == type('str'):
         raise FunctionSyntaxError(
             '需要输入字符串，而你输入的是%s'%type(file)
@@ -197,11 +224,54 @@ def find_file(file, mode): # 检测文件是否存在
         raise FunctionSyntaxError(
             '没有模式"%s"'%mode
         )
-def start( path ): # 文件运行
+def start( path ): # 启动
+    """
+    启动功能
+    用法：文件名或<import...as...>命令别名.start('路径')
+    此命令存在的意义是为了运行除Python文件以外的其他文件或打开一个文件夹
+    """
     return os.system("start " + path)
 def call( path ): # 文件调用
+    """
+    文件调用功能
+    用法：文件名或<import...as...>命令别名.start('路径')
+    start命令和call命令的区别：
+    1.start命令在执行时会打开另一个窗口，而call命令不会
+    2.call可以获取特定文件的返回值，例如调用.vbs文件，按下弹窗上的按钮后会返回数字
+    3.此命令只能用于文件
+    """
     return os.system("call " + path)
 class Vbs: # 创建并调用弹窗，类用法(class)
+    """
+    弹窗功能
+    用法：变量 = 文件名或<import...as...>命令别名.Vbs()
+          变量.shownormal('标题','正文','换行文字')/warningaskcancel('标题','正文','换行文字')/erroraskcancel('标题','正文','换行文字')/...")
+    如果想要换行，可以这样：
+    import easy_functions as ef
+    v = ef.Vbs()
+    v.shownormal('a','b','c','d')
+    其中，"a"为标题，"b"为正文，"c"和"d"将被换行
+
+    它看上去应该是这样子的(弹窗位置演示)：
+    标题处：      |--a------|
+    正文处：      |    b    |
+    换行的正文：  |    c    |
+    换行的正文：  |    d    |
+    按键处：      |----确定-|
+
+    换行文字支持无限个，相当于在tkinter的弹窗中使用换行符
+    注意：模块tkinter中含有的图标类型以及按键本模块不再编写，请使用模块tkinter
+          用户按下Vbs提供的按键后会返回数字，可根据数字判断用户按下的按键
+          请自行调试返回值，每个按键的返回值这里不予提供
+          警告：标题和正文中不能含有换行符和回车符，这些字符在标题和正文出现将被忽略
+    功能Vbs现接受以下图标参数：
+    变量.shownormal()-无图标')
+    变量.warningaskcancel()-显示警告图标并提供[确认]和[取消]
+    变量.erroraskcancel()-显示错误图标并提供[确认]和[取消]
+    变量.infoaskcancel()-显示信息图标并提供[确认]和[取消]
+    变量.warningaskyesno()-显示警告图标并提供[是]和[否]
+    变量.errorretry()-显示错误图标并提供[重试]和[取消]
+    """
     def __init__( self ):
         self.path = tempfile.gettempdir() + '\\easy_functionsMSG.vbs'
     def shownormal(self, title='easy_functions msgbox', message='模块easy_functions，简单，实用', *chr13): #无图标
@@ -325,6 +395,23 @@ class Vbs: # 创建并调用弹窗，类用法(class)
             f.write('))')
         return call(self.path)
 def color( color ): # 更改颜色
+    """
+    更改命令行颜色
+    用法：文件名或<import...as...>命令别名.color('完整颜色编码')
+    该功能现接受以下颜色编码：
+    0 = 黑色       8 = 灰色
+    1 = 蓝色       9 = 淡蓝色
+    2 = 绿色       A = 淡绿色
+    3 = 浅绿色     B = 淡浅绿色
+    4 = 红色       C = 淡红色
+    5 = 紫色       D = 淡紫色
+    6 = 黄色       E = 淡黄色
+    7 = 白色       F = 亮白色
+    一个完整的颜色编码由两个颜色编码组成，第一个为背景，第二个为前景')
+    你可以通过不同的组合达到不同的颜色效果')
+    例如: "color 0a" 将在黑色背景上产生淡绿色字幕')
+    再例如："color fc" 将在亮白色背景上产生亮红色前景等'
+    """
     colorfontlist = ['0','1','2','3','4','5','6','7']
     colorbacklist = ['8','9','a','b','c','d','e','f']
     try:
@@ -359,6 +446,11 @@ def color( color ): # 更改颜色
         )
     return
 def mode(cols, lines): # 更改cmd外框大小
+    """
+    更改命令行窗口大小
+    用法：文件名或<import...as...>命令别名.mode(宽, 高)
+    宽和高需要输入数字，也可以输入字符串，但字符串必须由数字组成
+    """
     try:
         int(str(cols))
     except ValueError as e:
@@ -377,6 +469,12 @@ def mode(cols, lines): # 更改cmd外框大小
         l = str(lines)
     return os.system('mode con cols=' + c + ' lines=' + l)
 def shield(words, WordsBlackList): # 词语屏蔽
+    """
+    词语屏蔽功能
+    用法：先新建一个列表，例如blacklist
+    用法：文件名或<import...as...>命令别名.shield('句子',blacklist)
+    将会把句子中出现在blacklist中的词语全部替换为"*"
+    """
     A_list = ['*','**','***','****','*****','******','*******','********','*********','**********','***********','************']
     try:
         WordsBlackList.append('test')
@@ -391,6 +489,21 @@ def shield(words, WordsBlackList): # 词语屏蔽
             words = words.replace(i, A_list[length])
     return words
 def choice(choose='YN', text='Y/N', default='False', timeout='10', *, hide=False): # 按键选择功能
+    """
+    按键选择功能
+    用法：文件名或<import...as...>命令别名.choice('用户可选的按键','显示的文字(显示的文字中不能含有空格)','默认按键选择(可填)','多少秒后默认按键生效(必须先指定默认按键，默认为0)'),'hide=True/False(是否隐藏选项列表)')
+    可以写成：变量 = 文件名或<import...as...>命令别名.choice()
+    如果这样写，用户所选择的按键就会变为返回值存储在变量中
+    返回值是根据用户选择的按键的排序生成的
+    例如('YNC')这个用户可选按键列表中，共有3个按键：<Y>、<N>和<C>
+    如果用户按下<Y>，返回值为1
+    如果用户按下<N>，返回值为2
+    如果用户按下<C>，返回值为3
+    以此类推
+    但在选择按键的过程中，如果用户使用<Ctrl+Break>或<Ctrl+C>键，该功能会返回0
+    如果检测到错误状态，该功能会返回255
+    如果用户按下的键不是有效的选择，电脑会发出警告响声(如果在音量合成器里启用了系统声音)
+    """
     choice = 'choice '
     choice = choice + ' /C '
     for i in range(len(text)):
@@ -412,6 +525,17 @@ def choice(choose='YN', text='Y/N', default='False', timeout='10', *, hide=False
             )
     return os.system(choice)
 class Cipher: # 加密英文
+    """
+    加密英文
+    用法：变量 = 文件名或<import...as...>命令别名.Cipher()
+          变量.lock('明文')/unlock('密文')
+    本功能有一套自己的独立加密算法，可以把输入的字母转换成不可阅读的文字
+    类Cipher现接受以下参数：
+    变量.lock()-加密文字
+    变量.unlock()-解密文字
+    注意：本功能只能加密英文
+          本功能的加密算法是独立的，所以只有本功能的unlock()才能解密
+    """
     def __init__( self ):
         self.WordsComparison = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
         self.NumberComparison = ['а','б','в','г','д','е','ё','ж','з','и','й','к','л','м','н','о','п','р','с','Я','Ч','Ш','Щ','ц','ю','э']
@@ -430,18 +554,40 @@ class Cipher: # 加密英文
             text = text.replace(self.NumberCapsComparison[i], self.WordsCapsComparison[i])
         return text
 def mkdir( path ): # 新建文件夹
+    """
+    新建文件夹
+    用法：文件名或<import...as...>命令别名.mkdir('文件夹路径')
+    如不填写路径，只填写名称，那么默认在同级文件夹下新建
+    """
     return os.system('mkdir ' + path)
 def copy(filein, fileout): # 文件复制功能
+    """
+    复制文件
+    用法：文件名或<import...as...>命令别名.copy('被复制的文件路径','复制出来的文件路径')")
+    注意：需要完整后缀
+          你可以更改复制出来的文件的后缀名，但这只限于纯文本')
+          对于非纯文本的文件，例如docx，ppt等，因更改后缀而造成的文件损坏、编码缺失等问题，作者概不负责
+    """
     if not find_file(filein,'exist?'):
         raise FileNotFoundError(
             '没有名为%s的文件'%filein
         )
     return os.system('copy ' + filein + ' ' + fileout + ' ' + '>nul')
 def pause(text='请按任意键继续...'): # 暂停功能
+    """
+    暂停命令行
+    用法：文件名或<import...as...>命令别名.pause('显示的文字')
+    这个命令和使用input('显示的文字')的区别是pause()只需要按下键盘上的任意按键，而input()需要按下回车
+    """
     print(text)
     os.system('pause >nul')
     return
 def find_suffix(path, suffix): # 查找指定后缀的文件
+    """
+    查找指定后缀的文件
+    用法：文件名或<import...as...>命令别名.find_suffix('文件夹路径','后缀')
+    将遍历文件夹中所有指定后缀的文件，以列表形式返回
+    """
     bat = tempfile.gettempdir() + '\\make_file_list.bat'
     tmp = tempfile.gettempdir() + '\\maker.tmp'
     file_list = []
@@ -472,12 +618,21 @@ def find_suffix(path, suffix): # 查找指定后缀的文件
     os.remove(tmp)
     return file_list
 def update(): # 更新本模块
+    """
+    更新本模块
+    用法：文件名或<import...as...>命令别名.update()
+    将自动检测模块的更新，有则更新
+    """
     if not os.system("pip --version") == 0:
         print("pip.exe似乎出现了一些问题\n请检查环境变量以及pip.exe是否损坏")
         return
     if os.system("pip install --upgrade easy_functions") == 0:
         print("已是最新版本")
 def getIP(): # 获取本机IP
+    """
+    用法：文件名或<import...as...>命令别名.getIP()
+    将返回本机IP
+    """
     hostname = socket.gethostname()
     IP = socket.gethostbyname(hostname)
     return IP
@@ -505,6 +660,10 @@ class Environment: # 操作环境变量
     def delete(self): # 删除环境变量
         os.system("setx %s """%self.value)
 def log(): # 更新日志
+    """
+    本模块更新日志
+    用法：文件名或<import...as...>命令别名.log()
+    """
     print('')
     print('[2021-3-21] [3条更新]')
     print('1.增加log()函数，可用于查看本模块的更新日志，日志从2021-3-21开始记录')
@@ -645,8 +804,16 @@ def log(): # 更新日志
     print("[2021-12-19] [1条更新]")
     print("1.将功能Code更名为Cipher")
     print("")
+    print("[2022-1-23] [2条更新]")
+    print("1.将所有功能的帮助文字移至功能内部，删除helpcmd功能，请使用Python内置的help()命令")
+    print("[Beta]2.增加了Environment功能，具体请使用")
+    print("")
     return
 def version(): # 版本
+    """
+    显示本模块版本
+    用法：文件名或<import...as...>命令别名.version()
+    """
     global __version__
     print('easy_functions版本:%s'%__version__)
     print('%s个函数'%(__version__[2] + __version__[3]))
@@ -654,198 +821,14 @@ def version(): # 版本
     print('%s个微调'%(__version__[5] + __version__[6]))
     return
 def help(): # 文件命令功能列表
-    x = len(cmdlist)
-    print('easy_functions创建日期:2020-12-27')
-    print('easy_functions版本:',__version__)
+    """
+    命令列表功能
+    用法：文件名或<import...as...>命令别名.help()
+    """
+    print('easy_functions版本:', __version__)
     print('内含%s个函数，%s个类'%(__version__[2] + __version__[3], __version__[0]))
     print('模块easy_functions可使用的功能为%s'%cmdlist)
     print('列表中以大写字母开头的为类(class)')
-    print("查看某功能的详细用法请输入：文件名或<import...as...>命令别名.helpcmd('功能')")
-    print("查看所有功能的详细用法请输入：文件名或<import...as...>命令别名.helpcmd('all')，将逐一解释每个功能")
-    return
-def helpcmd( cmd ): # 文件命令功能解释
-    if cmd == 'bigfont':
-        print('<',cmd,'>','大字显示功能')
-        print("用法：文件名或<import...as...>命令别名.bigfont('字母、空格或点')")
-        return
-    if cmd == 'help':
-        print('<',cmd,'>','命令列表功能')
-        print('用法：文件名或<import...as...>命令别名.help()')
-        return
-    if cmd == 'helpcmd':
-        print('<',cmd,'>','命令解释功能')
-        print("用法：文件名或<import...as...>命令别名.helpcmd('命令')")
-        return
-    if cmd == 'literally':
-        print('<',cmd,'>','逐字显示功能')
-        print("用法：文件名或<import...as...>命令别名.literally('文字',显示间隔时间)")
-        return
-    if cmd == 'wait':
-        print('<',cmd,'>','等待功能')
-        print('用法：文件名或<import...as...>命令别名.wait(持续的时间)')
-        return
-    if cmd == 'cls':
-        print('<',cmd,'>','清除屏幕功能')
-        print('用法：文件名或<import...as...>命令别名.cls()')
-        return
-    if cmd == 'title':
-        print('<',cmd,'>','更改标题功能')
-        print("用法：文件名或<import...as...>命令别名.title('标题')")
-        return
-    if cmd == 'find_file':
-        print('<',cmd,'>','文件检测功能')
-        print("用法：文件名或<import...as...>命令别名.find_file('文件路径','模式')")
-        print('共有两种模式可用：')
-        print('1."exist?"判断文件是否存在，返回布尔值')
-        print('2."import?"判断文件是否可以被导入，返回布尔值')
-        return
-    if cmd == 'start':
-        print('<',cmd,'>','文件运行功能')
-        print("用法：文件名或<import...as...>命令别名.start('路径')")
-        print('此命令存在的意义是为了运行除Python文件以外的其他文件或打开一个文件夹')
-        return
-    if cmd == 'call':
-        print('<',cmd,'>','文件调用功能')
-        print("用法：文件名或<import...as...>命令别名.start('路径')")
-        print('start命令和call命令的区别：')
-        print('1.start命令在执行时会打开另一个窗口，而call命令不会')
-        print('2.call可以获取特定文件的返回值，例如调用.vbs文件，按下弹窗上的按钮后会返回数字')
-        print('3.此命令只能用于文件')
-        return
-    if cmd == 'Vbs':
-        print('<',cmd,'>','弹窗创建功能')
-        print("用法：变量 = 文件名或<import...as...>命令别名.Vbs()")
-        print("      变量.shownormal('标题','正文','换行文字')/warningaskcancel('标题','正文','换行文字')/erroraskcancel('标题','正文','换行文字')/...")
-        print('如果想要换行，可以这样：')
-        print('import easy_functions as ef')
-        print('v = ef.Vbs()')
-        print("v.shownormal('a','b','c','d')")
-        print('其中，"a"为标题，"b"为正文，"c"和"d"将被换行')
-        print('它看上去应该是这样子的(弹窗位置演示)：')
-        print('')
-        print('标题处：      |--a------|')
-        print('正文处：      |    b    |')
-        print('换行的正文：  |    c    |')
-        print('换行的正文：  |    d    |')
-        print('按键处：      |----确定-|')
-        print('')
-        print('换行文字支持无限个，相当于在tkinter的弹窗中使用换行符')
-        print('注意：模块tkinter中含有的图标类型以及按键本模块不再编写，请使用模块tkinter')
-        print('      用户按下Vbs提供的按键后会返回数字，可根据数字判断用户按下的按键')
-        print('      请自行调试返回值，每个按键的返回值这里不予提供')
-        print('警告：标题和正文中不能含有换行符和回车符')
-        print('      这些字符在标题和正文出现将被忽略')
-        print('类Vbs现接受以下图标参数：')
-        print('变量.shownormal()-无图标')
-        print('变量.warningaskcancel()-显示警告图标并提供[确认]和[取消]')
-        print('变量.erroraskcancel()-显示错误图标并提供[确认]和[取消]')
-        print('变量.infoaskcancel()-显示信息图标并提供[确认]和[取消]')
-        print('变量.warningaskyesno()-显示警告图标并提供[是]和[否]')
-        print('变量.errorretry()-显示错误图标并提供[重试]和[取消]')
-        return
-    if cmd == 'color':
-        print('<',cmd,'>','颜色更改功能')
-        print("用法：文件名或<import...as...>命令别名.color('完整颜色编码')")
-        print('该功能现接受以下颜色编码：')
-        print('0 = 黑色       8 = 灰色')
-        print('1 = 蓝色       9 = 淡蓝色')
-        print('2 = 绿色       A = 淡绿色')
-        print('3 = 浅绿色     B = 淡浅绿色')
-        print('4 = 红色       C = 淡红色')
-        print('5 = 紫色       D = 淡紫色')
-        print('6 = 黄色       E = 淡黄色')
-        print('7 = 白色       F = 亮白色')
-        print('一个完整的颜色编码由两个颜色编码组成，第一个为背景，第二个为前景')
-        print('你可以通过不同的组合达到不同的颜色效果')
-        print('例如: "color 0a" 将在黑色背景上产生淡绿色字幕')
-        print('再例如："color fc" 将在亮白色背景上产生亮红色前景等')
-        return
-    if cmd == 'mode':
-        print('<',cmd,'>','cmd外框大小修改功能')
-        print('用法：文件名或<import...as...>命令别名.mode(宽, 高)')
-        print('宽和高需要输入数字，也可以输入字符串，但字符串必须由数字组成')
-        return
-    if cmd == 'shield':
-        print('<',cmd,'>','词语屏蔽功能')
-        print('用法：先新建一个列表，例如blacklist')
-        print("用法：文件名或<import...as...>命令别名.shield('句子',blacklist)")
-        print('将会把句子中出现在blacklist中的词语全部替换为"*"')
-        return
-    if cmd == 'choice':
-        print('<',cmd,'>','按键选择功能')
-        print("用法：文件名或<import...as...>命令别名.choice('用户可选的按键','显示的文字','默认按键选择(可填)','多少秒后默认按键生效(必须先指定默认按键，默认为0)'),'hide=True/False'(是否隐藏选项列表))")
-        print('显示的文字中不能含有空格')
-        print('可以写成：变量 = 文件名或<import...as...>命令别名.choice()')
-        print('如果这样写，用户所选择的按键就会变为返回值存储在变量中')
-        print('返回值是根据用户选择的按键的排序生成的')
-        print("例如('YNC')这个用户可选按键列表中，共有3个按键：<Y>、<N>和<C>")
-        print('如果用户按下<Y>，返回值为1')
-        print('如果用户按下<N>，返回值为2')
-        print('如果用户按下<C>，返回值为3')
-        print('以此类推')
-        print('但在选择按键的过程中，如果用户使用<Ctrl+Break>或<Ctrl+C>键，该功能会返回0')
-        print('如果检测到错误状态，该功能会返回255')
-        print('如果用户按下的键不是有效的选择，电脑会发出警告响声(如果在音量合成器里启用了系统声音)')
-        return
-    if cmd == 'Cipher':
-        print('<',cmd,'>','文字加密功能')
-        print("用法：变量 = 文件名或<import...as...>命令别名.Cipher()")
-        print("      变量.lock('明文')/unlock('密文')")
-        print('本功能有一套自己的独立加密算法，可以把输入的字母转换成不可阅读的文字')
-        print('类Cipher现接受以下参数：')
-        print('变量.lock()-加密文字')
-        print('变量.unlock()-解密文字')
-        print('注意：本功能只能加密英文')
-        print('      本功能的加密算法是独立的，所以只有本功能的unlock()才能解密')
-        return
-    if cmd == 'mkdir':
-        print('<',cmd,'>','新建文件夹功能')
-        print("用法：文件名或<import...as...>命令别名.mkdir('文件夹路径')")
-        print('如不填写路径，只填写名称，那么默认在同级文件夹下新建')
-        return
-    if cmd == 'copy':
-        print('<',cmd,'>','文件复制功能')
-        print("用法：文件名或<import...as...>命令别名.copy('被复制的文件路径','复制出来的文件路径')")
-        print('注意：需要完整后缀')
-        print('      你可以更改复制出来的文件的后缀名，但这只限于纯文本')
-        print('      对于非纯文本的文件，例如docx，ppt等，因更改后缀而造成的文件损坏、编码缺失等问题，作者概不负责')
-        return
-    if cmd == 'pause':
-        print('<',cmd,'>','暂停功能')
-        print("用法：文件名或<import...as...>命令别名.pause('显示的文字')")
-        print("这个命令和使用input('显示的文字')的区别是input()是pause()只需要按下键盘上的任意按键，而input()需要按下回车")
-        return
-    if cmd == 'find_suffix':
-        print('<',cmd,'>','后缀查找功能')
-        print("用法：文件名或<import...as...>命令别名.find_suffix('文件夹路径','后缀')")
-        print('将遍历文件夹中所有指定后缀的文件，以列表形式返回')
-        return
-    if cmd == "update":
-        print("<",cmd,">","自动更新功能")
-        print("用法：文件名或<import...as...>命令别名.update()")
-        print("将自动检测模块的更新，有则更新")
-        return
-    if cmd == "getIP":
-        print("<",cmd,">","本机IP查看功能")
-        print("用法：文件名或<import...as...>命令别名.getIP()")
-        print("将返回本机IP")
-        return
-    if cmd == 'log':
-        print('<',cmd,'>','更新日志查看功能')
-        print('更新日志从2021-3-21开始记录')
-        print('用法：文件名或<import...as...>命令别名.log()')
-        return
-    if cmd == 'version':
-        print('<',cmd,'>','版本显示功能')
-        print('用法：文件名或<import...as...>命令别名.version()')
-        return
-    if cmd == 'all':
-        x = len(cmdlist)
-        print('模块easy_functions共',x,'个功能，已全部解释完毕')
-        for i in range(x):
-            helpcmd(cmdlist[i])
-        return
-    print('<',cmd,'>','暂时还没有该功能')
     return
 if __name__ == '__main__':
     help()
