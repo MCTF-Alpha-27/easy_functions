@@ -1,7 +1,5 @@
 ﻿# 介绍
 从它的名字就可以看出，这就是一个简单但很实用的模块
-<br/>每个命令都可以使用模块内的helpcmd()命令来帮助
-<br/>模块内自带更新日志，使用log()命令来查看
 # 迈出第一步
 ```Python
   import easy_functions as ef
