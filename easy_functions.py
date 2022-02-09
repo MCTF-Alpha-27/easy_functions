@@ -24,7 +24,7 @@ for i in cmdlist:
     if i.istitle():
         c += 1
 d = len(cmdlist) - c
-__version__ = str(c) + '.' + str(d) + '.' + '84' # 版本号
+__version__ = str(c) + '.' + str(d) + '.' + '85' # 版本号
 __author__ = 'Jerry0940' # 作者
 class FunctionSyntaxError(Exception): # 异常
     pass
@@ -240,7 +240,7 @@ def call( path ): # 文件调用
     2.call可以获取特定文件的返回值，例如调用.vbs文件，按下弹窗上的按钮后会返回数字
     3.此命令只能用于文件
     """
-    return os.system("call " + path)
+    return os.system("call %s >nul"%path)
 class Vbs: # 创建并调用弹窗，类用法(class)
     """
     弹窗功能
@@ -664,7 +664,7 @@ def log(): # 更新日志
     显示本模块更新日志
     用法：文件名或<import...as...>命令别名.log()
     """
-    start("https://www.kancloud.cn/jerry0940/easy_functions_update_log/2629246")
+    start("https://www.kancloud.cn/jerry0940/easy_functions_update_log/2639009")
     return
 def version(): # 版本
     """
