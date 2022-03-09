@@ -1,5 +1,5 @@
 ﻿"""声明
-easy_functions是一个简单但实用的Python模块，可以通过import文件里的def函数和类(class)来达到简化代码运行的效果
+easy_functions是一个简单但实用的Python模块，可以通过import文件里的函数和类来达到简化代码运行的效果
 已经开发了许多功能，目前还在继续开发新的功能
 本模块使用MIT协议
 """
@@ -8,15 +8,16 @@ import sys
 import time
 import socket
 import tempfile
+
 cmdlist = [
-    'bigfont','literally','wait','cls',
-    'title','find_file','start','call',
-    'Vbs','color','mode','shield',
-    'choice','Cipher','mkdir','copy',
-    'pause','find_suffix','help','Environment<Beta>',
+    'bigfont', 'literally', 'wait', 'cls',
+    'title', 'find_file', 'start', 'call',
+    'Vbs', 'color', 'mode', 'shield',
+    'choice', 'Cipher', 'mkdir', 'copy',
+    'pause', 'find_suffix', 'help', 'Environment<Beta>',
     'getIP'
-    ,'version','update','log'
-] # 命令列表，以大写字母开头的为类(class)
+    , 'version', 'update', 'log'
+]  # 命令列表，以大写字母开头的为类(class)
 __all__ = cmdlist
 c = 0
 d = 0
@@ -24,132 +25,138 @@ for i in cmdlist:
     if i.istitle():
         c += 1
 d = len(cmdlist) - c
-__version__ = str(c) + '.' + str(d) + '.' + '85' # 版本号
-__author__ = 'Jerry0940' # 作者
-class FunctionSyntaxError(Exception): # 异常
+__version__ = str(c) + '.' + str(d) + '.' + '85'  # 版本号
+__author__ = 'Jerry0940'  # 作者
+
+
+class FunctionSyntaxError(Exception):  # 异常
     pass
-def bigfont( name ): # 大字显示
+
+
+def bigfont(name):  # 大字显示
     """
     大字显示功能
     用法：文件名或<import...as...>命令别名.bigfont('字母、空格或点')
     """
-    lngth = len(name) 
+    lngth = len(name)
     l = ""
-    for x in range(0, lngth): 
-        c = name[x] 
+    for x in range(0, lngth):
+        c = name[x]
         c = c.upper()
-        if (c == "A"): 
-            print("..######..\n..#....#..\n..######..", end = " ") 
-            print("\n..#....#..\n..#....#..\n\n") 
-              
-        elif (c == "B"): 
-            print("..######..\n..#....#..\n..#####...", end = " ") 
-            print("\n..#....#..\n..######..\n\n") 
-              
-        elif (c == "C"): 
-            print("..######..\n..#.......\n..#.......", end = " ") 
-            print("\n..#.......\n..######..\n\n") 
-              
-        elif (c == "D"): 
-            print("..#####...\n..#....#..\n..#....#..", end = " ") 
-            print("\n..#....#..\n..#####...\n\n") 
-              
-        elif (c == "E"): 
-            print("..######..\n..#.......\n..#####...", end = " ") 
-            print("\n..#.......\n..######..\n\n") 
-              
-        elif (c == "F"): 
-            print("..######..\n..#.......\n..#####...", end = " ") 
-            print("\n..#.......\n..#.......\n\n") 
-              
-        elif (c == "G"): 
-            print("..######..\n..#.......\n..#.####..", end = " ") 
-            print("\n..#....#..\n..#####...\n\n") 
-              
-        elif (c == "H"): 
-            print("..#....#..\n..#....#..\n..######..", end = " ") 
-            print("\n..#....#..\n..#....#..\n\n") 
-              
-        elif (c == "I"): 
-            print("..######..\n....##....\n....##....", end = " ") 
-            print("\n....##....\n..######..\n\n") 
-              
-        elif (c == "J"): 
-            print("..######..\n....##....\n....##....", end = " ") 
-            print("\n..#.##....\n..####....\n\n") 
-              
-        elif (c == "K"): 
-            print("..#...#...\n..#..#....\n..##......", end = " ") 
-            print("\n..#..#....\n..#...#...\n\n") 
-              
-        elif (c == "L"): 
-            print("..#.......\n..#.......\n..#.......", end = " ") 
-            print("\n..#.......\n..######..\n\n") 
-              
-        elif (c == "M"): 
-            print("..#....#..\n..##..##..\n..#.##.#..", end = " ") 
-            print("\n..#....#..\n..#....#..\n\n") 
-              
-        elif (c == "N"): 
-            print("..#....#..\n..##...#..\n..#.#..#..", end = " ") 
-            print("\n..#..#.#..\n..#...##..\n\n") 
-              
-        elif (c == "O"): 
-            print("..######..\n..#....#..\n..#....#..", end = " ") 
-            print("\n..#....#..\n..######..\n\n") 
-              
-        elif (c == "P"): 
-            print("..######..\n..#....#..\n..######..", end = " ") 
-            print("\n..#.......\n..#.......\n\n") 
-              
-        elif (c == "Q"): 
-            print("..######..\n..#....#..\n..#.#..#..", end = " ") 
-            print("\n..#..#.#..\n..######..\n\n") 
-              
-        elif (c == "R"): 
-            print("..######..\n..#....#..\n..#.##...", end = " ") 
-            print("\n..#...#...\n..#....#..\n\n") 
-              
-        elif (c == "S"): 
-            print("..######..\n..#.......\n..######..", end = " ") 
-            print("\n.......#..\n..######..\n\n") 
-              
-        elif (c == "T"): 
-            print("..######..\n....##....\n....##....", end = " ") 
-            print("\n....##....\n....##....\n\n") 
-              
-        elif (c == "U"): 
-            print("..#....#..\n..#....#..\n..#....#..", end = " ") 
-            print("\n..#....#..\n..######..\n\n") 
-              
-        elif (c == "V"): 
-            print("..#....#..\n..#....#..\n..#....#..", end = " ") 
-            print("\n...#..#...\n....##....\n\n") 
-              
-        elif (c == "W"): 
-            print("..#....#..\n..#....#..\n..#.##.#..", end = " ") 
-            print("\n..##..##..\n..#....#..\n\n") 
-              
-        elif (c == "X"): 
-            print("..#....#..\n...#..#...\n....##....", end = " ") 
-            print("\n...#..#...\n..#....#..\n\n") 
-              
-        elif (c == "Y"): 
-            print("..#....#..\n...#..#...\n....##....", end = " ") 
-            print("\n....##....\n....##....\n\n") 
-              
-        elif (c == "Z"): 
-            print("..######..\n......#...\n.....#....", end = " ") 
-            print("\n....#.....\n..######..\n\n") 
-              
-        elif (c == " "): 
-            print("..........\n..........\n..........", end = " ") 
-            print("\n..........\n\n") 
-              
-        elif (c == "."): 
+        if c == "A":
+            print("..######..\n..#....#..\n..######..", end=" ")
+            print("\n..#....#..\n..#....#..\n\n")
+
+        elif c == "B":
+            print("..######..\n..#....#..\n..#####...", end=" ")
+            print("\n..#....#..\n..######..\n\n")
+
+        elif c == "C":
+            print("..######..\n..#.......\n..#.......", end=" ")
+            print("\n..#.......\n..######..\n\n")
+
+        elif c == "D":
+            print("..#####...\n..#....#..\n..#....#..", end=" ")
+            print("\n..#....#..\n..#####...\n\n")
+
+        elif c == "E":
+            print("..######..\n..#.......\n..#####...", end=" ")
+            print("\n..#.......\n..######..\n\n")
+
+        elif c == "F":
+            print("..######..\n..#.......\n..#####...", end=" ")
+            print("\n..#.......\n..#.......\n\n")
+
+        elif c == "G":
+            print("..######..\n..#.......\n..#.####..", end=" ")
+            print("\n..#....#..\n..#####...\n\n")
+
+        elif c == "H":
+            print("..#....#..\n..#....#..\n..######..", end=" ")
+            print("\n..#....#..\n..#....#..\n\n")
+
+        elif c == "I":
+            print("..######..\n....##....\n....##....", end=" ")
+            print("\n....##....\n..######..\n\n")
+
+        elif c == "J":
+            print("..######..\n....##....\n....##....", end=" ")
+            print("\n..#.##....\n..####....\n\n")
+
+        elif c == "K":
+            print("..#...#...\n..#..#....\n..##......", end=" ")
+            print("\n..#..#....\n..#...#...\n\n")
+
+        elif c == "L":
+            print("..#.......\n..#.......\n..#.......", end=" ")
+            print("\n..#.......\n..######..\n\n")
+
+        elif c == "M":
+            print("..#....#..\n..##..##..\n..#.##.#..", end=" ")
+            print("\n..#....#..\n..#....#..\n\n")
+
+        elif c == "N":
+            print("..#....#..\n..##...#..\n..#.#..#..", end=" ")
+            print("\n..#..#.#..\n..#...##..\n\n")
+
+        elif c == "O":
+            print("..######..\n..#....#..\n..#....#..", end=" ")
+            print("\n..#....#..\n..######..\n\n")
+
+        elif c == "P":
+            print("..######..\n..#....#..\n..######..", end=" ")
+            print("\n..#.......\n..#.......\n\n")
+
+        elif c == "Q":
+            print("..######..\n..#....#..\n..#.#..#..", end=" ")
+            print("\n..#..#.#..\n..######..\n\n")
+
+        elif c == "R":
+            print("..######..\n..#....#..\n..#.##...", end=" ")
+            print("\n..#...#...\n..#....#..\n\n")
+
+        elif c == "S":
+            print("..######..\n..#.......\n..######..", end=" ")
+            print("\n.......#..\n..######..\n\n")
+
+        elif c == "T":
+            print("..######..\n....##....\n....##....", end=" ")
+            print("\n....##....\n....##....\n\n")
+
+        elif c == "U":
+            print("..#....#..\n..#....#..\n..#....#..", end=" ")
+            print("\n..#....#..\n..######..\n\n")
+
+        elif c == "V":
+            print("..#....#..\n..#....#..\n..#....#..", end=" ")
+            print("\n...#..#...\n....##....\n\n")
+
+        elif c == "W":
+            print("..#....#..\n..#....#..\n..#.##.#..", end=" ")
+            print("\n..##..##..\n..#....#..\n\n")
+
+        elif c == "X":
+            print("..#....#..\n...#..#...\n....##....", end=" ")
+            print("\n...#..#...\n..#....#..\n\n")
+
+        elif c == "Y":
+            print("..#....#..\n...#..#...\n....##....", end=" ")
+            print("\n....##....\n....##....\n\n")
+
+        elif c == "Z":
+            print("..######..\n......#...\n.....#....", end=" ")
+            print("\n....#.....\n..######..\n\n")
+
+        elif c == " ":
+            print("..........\n..........\n..........", end=" ")
+            print("\n..........\n\n")
+
+        elif c == ".":
             print("----..----\n\n")
     return
-def literally(text, wait=0.1): # 逐字显示
+
+
+def literally(text, wait=0.1):  # 逐字显示
     """
     逐字显示功能
     用法：文件名或<import...as...>命令别名.literally('文字',显示间隔时间)
@@ -158,7 +165,7 @@ def literally(text, wait=0.1): # 逐字显示
         wait + 1
     except TypeError as e:
         raise FunctionSyntaxError(
-            '你输入的值%s不符合运行要求，请输入数字'%type(wait)
+            '你输入的值%s不符合运行要求，请输入数字' % type(wait)
         ) from e
     sys.stdout.write("\n " + " " * 60 + "\r")
     sys.stdout.flush()
@@ -167,7 +174,9 @@ def literally(text, wait=0.1): # 逐字显示
         sys.stdout.flush()
         time.sleep(wait)
     return
-def wait(wait=1): # 等待功能
+
+
+def wait(wait=1.0):  # 等待功能
     """
     等待功能
     用法：文件名或<import...as...>命令别名.wait(持续的时间)
@@ -176,24 +185,30 @@ def wait(wait=1): # 等待功能
         time.sleep(wait)
     except TypeError as e:
         raise FunctionSyntaxError(
-            '你输入的值%s不符合运行要求，请输入数字'%type(wait)
+            '你输入的值%s不符合运行要求，请输入数字' % type(wait)
         ) from e
     return
-def cls(): # 清除命令行
+
+
+def cls():  # 清除命令行
     """
     清除命令行功能
     用法：文件名或<import...as...>命令别名.cls()
     """
     os.system('cls')
     return
-def title( title ): # 更改标题
+
+
+def title(title):  # 更改标题
     """
     更改命令行标题功能
     用法：文件名或<import...as...>命令别名.title('标题')
     """
     os.system("title " + title)
     return
-def find_file(file, mode): # 检测文件是否存在
+
+
+def find_file(file, mode):  # 检测文件是否存在
     """
     文件查找功能
     用法：文件名或<import...as...>命令别名.find_file('文件路径','模式')")
@@ -203,11 +218,11 @@ def find_file(file, mode): # 检测文件是否存在
     """
     if not type(file) == type('str'):
         raise FunctionSyntaxError(
-            '需要输入字符串，而你输入的是%s'%type(file)
+            '需要输入字符串，而你输入的是%s' % type(file)
         )
     if mode == 'exist?':
         try:
-            f = open(file,'r')
+            f = open(file, 'r')
         except FileNotFoundError:
             return False
         else:
@@ -222,16 +237,20 @@ def find_file(file, mode): # 检测文件是否存在
             return True
     else:
         raise FunctionSyntaxError(
-            '没有模式"%s"'%mode
+            '没有模式"%s"' % mode
         )
-def start( path ): # 启动
+
+
+def start(path):  # 启动
     """
     启动功能
     用法：文件名或<import...as...>命令别名.start('路径')
     此命令存在的意义是为了运行除Python文件以外的其他文件或打开一个文件夹
     """
     return os.system("start " + path)
-def call( path ): # 文件调用
+
+
+def call(path):  # 文件调用
     """
     文件调用功能
     用法：文件名或<import...as...>命令别名.start('路径')
@@ -240,8 +259,10 @@ def call( path ): # 文件调用
     2.call可以获取特定文件的返回值，例如调用.vbs文件，按下弹窗上的按钮后会返回数字
     3.此命令只能用于文件
     """
-    return os.system("call %s >nul"%path)
-class Vbs: # 创建并调用弹窗，类用法(class)
+    return os.system("call %s >nul" % path)
+
+
+class Vbs:  # 创建并调用弹窗，类用法(class)
     """
     弹窗功能
     用法：变量 = 文件名或<import...as...>命令别名.Vbs()
@@ -272,20 +293,22 @@ class Vbs: # 创建并调用弹窗，类用法(class)
     变量.warningaskyesno()-显示警告图标并提供[是]和[否]
     变量.errorretry()-显示错误图标并提供[重试]和[取消]
     """
-    def __init__( self ):
+
+    def __init__(self):
         self.path = tempfile.gettempdir() + '\\easy_functionsMSG.vbs'
-    def shownormal(self, title='easy_functions msgbox', message='模块easy_functions，简单，实用', *chr13): #无图标
-        title = title.replace('\n','')
-        message = message.replace('\n','')
-        title = title.replace('\r','')
-        message = message.replace('\r','')
+
+    def shownormal(self, title='easy_functions msgbox', message='模块easy_functions，简单，实用', *chr13):  # 无图标
+        title = title.replace('\n', '')
+        message = message.replace('\n', '')
+        title = title.replace('\r', '')
+        message = message.replace('\r', '')
         true = False
         chr = ' '
         if len(chr13) != 0:
             for i in chr13:
                 chr = chr + '+ chr(13) + ' + '"' + i + '"'
             true = True
-        with open(self.path,'w') as f:
+        with open(self.path, 'w') as f:
             f.write('wsh.quit(msgbox(')
             f.write('"' + message + '"')
             if true == True:
@@ -294,18 +317,20 @@ class Vbs: # 创建并调用弹窗，类用法(class)
             f.write('"' + title + '"')
             f.write('))')
         return call(self.path)
-    def warningaskcancel(self, title='easy_functions msgbox', message='模块easy_functions，简单，实用', *chr13): #显示警告图标并提供[确认]和[取消]
-        title = title.replace('\n','')
-        message = message.replace('\n','')
-        title = title.replace('\r','')
-        message = message.replace('\r','')
+
+    def warningaskcancel(self, title='easy_functions msgbox', message='模块easy_functions，简单，实用',
+                         *chr13):  # 显示警告图标并提供[确认]和[取消]
+        title = title.replace('\n', '')
+        message = message.replace('\n', '')
+        title = title.replace('\r', '')
+        message = message.replace('\r', '')
         true = False
         chr = ' '
         if len(chr13) != 0:
             for i in chr13:
                 chr = chr + '+ chr(13) + ' + '"' + i + '"'
             true = True
-        with open(self.path,'w') as f:
+        with open(self.path, 'w') as f:
             f.write('wsh.quit(msgbox(')
             f.write('"' + message + '"')
             if true == True:
@@ -314,18 +339,20 @@ class Vbs: # 创建并调用弹窗，类用法(class)
             f.write('"' + title + '"')
             f.write('))')
         return call(self.path)
-    def erroraskcancel(self, title='easy_functions msgbox', message='模块easy_functions，简单，实用', *chr13): #显示错误图标并提供[确认]和[取消]
-        title = title.replace('\n','')
-        message = message.replace('\n','')
-        title = title.replace('\r','')
-        message = message.replace('\r','')
+
+    def erroraskcancel(self, title='easy_functions msgbox', message='模块easy_functions，简单，实用',
+                       *chr13):  # 显示错误图标并提供[确认]和[取消]
+        title = title.replace('\n', '')
+        message = message.replace('\n', '')
+        title = title.replace('\r', '')
+        message = message.replace('\r', '')
         true = False
         chr = ' '
         if len(chr13) != 0:
             for i in chr13:
                 chr = chr + '+ chr(13) + ' + '"' + i + '"'
             true = True
-        with open(self.path,'w') as f:
+        with open(self.path, 'w') as f:
             f.write('wsh.quit(msgbox(')
             f.write('"' + message + '"')
             if true == True:
@@ -334,18 +361,20 @@ class Vbs: # 创建并调用弹窗，类用法(class)
             f.write('"' + title + '"')
             f.write('))')
         return call(self.path)
-    def infoaskcancel(self, title='easy_functions msgbox', message='模块easy_functions，简单，实用', *chr13): # 显示信息图标并提供[确认]和[取消]
-        title = title.replace('\n','')
-        message = message.replace('\n','')
-        title = title.replace('\r','')
-        message = message.replace('\r','')
+
+    def infoaskcancel(self, title='easy_functions msgbox', message='模块easy_functions，简单，实用',
+                      *chr13):  # 显示信息图标并提供[确认]和[取消]
+        title = title.replace('\n', '')
+        message = message.replace('\n', '')
+        title = title.replace('\r', '')
+        message = message.replace('\r', '')
         true = False
         chr = ' '
         if len(chr13) != 0:
             for i in chr13:
                 chr = chr + '+ chr(13) + ' + '"' + i + '"'
             true = True
-        with open(self.path,'w') as f:
+        with open(self.path, 'w') as f:
             f.write('wsh.quit(msgbox(')
             f.write('"' + message + '"')
             if true == True:
@@ -354,18 +383,20 @@ class Vbs: # 创建并调用弹窗，类用法(class)
             f.write('"' + title + '"')
             f.write('))')
         return call(self.path)
-    def warningaskyesno(self, title='easy_functions msgbox', message='模块easy_functions，简单，实用', *chr13): # 显示警告图标并提供[是]和[否]
-        title = title.replace('\n','')
-        message = message.replace('\n','')
-        title = title.replace('\r','')
-        message = message.replace('\r','')
+
+    def warningaskyesno(self, title='easy_functions msgbox', message='模块easy_functions，简单，实用',
+                        *chr13):  # 显示警告图标并提供[是]和[否]
+        title = title.replace('\n', '')
+        message = message.replace('\n', '')
+        title = title.replace('\r', '')
+        message = message.replace('\r', '')
         true = False
         chr = ' '
         if len(chr13) != 0:
             for i in chr13:
                 chr = chr + '+ chr(13) + ' + '"' + i + '"'
             true = True
-        with open(self.path,'w') as f:
+        with open(self.path, 'w') as f:
             f.write('wsh.quit(msgbox(')
             f.write('"' + message + '"')
             if true == True:
@@ -374,18 +405,19 @@ class Vbs: # 创建并调用弹窗，类用法(class)
             f.write('"' + title + '"')
             f.write('))')
         return call(self.path)
-    def errorretry(self, title='easy_functions msgbox', message='模块easy_functions，简单，实用', *chr13): # 显示错误图标并提供[重试]和[取消]
-        title = title.replace('\n','')
-        message = message.replace('\n','')
-        title = title.replace('\r','')
-        message = message.replace('\r','')
+
+    def errorretry(self, title='easy_functions msgbox', message='模块easy_functions，简单，实用', *chr13):  # 显示错误图标并提供[重试]和[取消]
+        title = title.replace('\n', '')
+        message = message.replace('\n', '')
+        title = title.replace('\r', '')
+        message = message.replace('\r', '')
         true = False
         chr = ' '
         if len(chr13) != 0:
             for i in chr13:
                 chr = chr + '+ chr(13) + ' + '"' + i + '"'
             true = True
-        with open(self.path,'w') as f:
+        with open(self.path, 'w') as f:
             f.write('wsh.quit(msgbox(')
             f.write('"' + message + '"')
             if true == True:
@@ -394,7 +426,9 @@ class Vbs: # 创建并调用弹窗，类用法(class)
             f.write('"' + title + '"')
             f.write('))')
         return call(self.path)
-def color( color ): # 更改颜色
+
+
+def color(color):  # 更改颜色
     """
     更改命令行颜色
     用法：文件名或<import...as...>命令别名.color('完整颜色编码')
@@ -412,8 +446,8 @@ def color( color ): # 更改颜色
     例如: "color 0a" 将在黑色背景上产生淡绿色字幕')
     再例如："color fc" 将在亮白色背景上产生亮红色前景等'
     """
-    colorfontlist = ['0','1','2','3','4','5','6','7']
-    colorbacklist = ['8','9','a','b','c','d','e','f']
+    colorfontlist = ['0', '1', '2', '3', '4', '5', '6', '7']
+    colorbacklist = ['8', '9', 'a', 'b', 'c', 'd', 'e', 'f']
     try:
         coloroutrange = color[2]
     except IndexError as e:
@@ -421,12 +455,12 @@ def color( color ): # 更改颜色
             coloroutrange = color[1]
         except IndexError as e:
             raise FunctionSyntaxError(
-                '"%s"不是一个完整的颜色编码'%color
+                '"%s"不是一个完整的颜色编码' % color
             ) from e
         else:
             if color[0].isupper() or color[1].isupper():
                 raise FunctionSyntaxError(
-                    '"%s"中含有大写字母，颜色编码必须小写'%color
+                    '"%s"中含有大写字母，颜色编码必须小写' % color
                 )
             elif color[0] in colorfontlist and color[1] in colorbacklist:
                 os.system('color ' + color)
@@ -438,14 +472,16 @@ def color( color ): # 更改颜色
                 os.system('color ' + color)
             else:
                 raise FunctionSyntaxError(
-                    '无效颜色编码"%s"'%color
+                    '无效颜色编码"%s"' % color
                 ) from e
     else:
         raise FunctionSyntaxError(
-            '不支持2个以上的颜色编码"%s"'%color
+            '不支持2个以上的颜色编码"%s"' % color
         )
     return
-def mode(cols, lines): # 更改cmd外框大小
+
+
+def mode(cols, lines):  # 更改cmd外框大小
     """
     更改命令行窗口大小
     用法：文件名或<import...as...>命令别名.mode(宽, 高)
@@ -468,14 +504,17 @@ def mode(cols, lines): # 更改cmd外框大小
     else:
         l = str(lines)
     return os.system('mode con cols=' + c + ' lines=' + l)
-def shield(words, WordsBlackList): # 词语屏蔽
+
+
+def shield(words, WordsBlackList):  # 词语屏蔽
     """
     词语屏蔽功能
     用法：先新建一个列表，例如blacklist
     用法：文件名或<import...as...>命令别名.shield('句子',blacklist)
     将会把句子中出现在blacklist中的词语全部替换为"*"
     """
-    A_list = ['*','**','***','****','*****','******','*******','********','*********','**********','***********','************']
+    A_list = ['*', '**', '***', '****', '*****', '******', '*******', '********', '*********', '**********',
+              '***********', '************']
     try:
         WordsBlackList.append('test')
     except AttributeError as e:
@@ -488,7 +527,9 @@ def shield(words, WordsBlackList): # 词语屏蔽
             length = len(i) - 1
             words = words.replace(i, A_list[length])
     return words
-def choice(choose='YN', text='Y/N', default='False', timeout='10', *, hide=False): # 按键选择功能
+
+
+def choice(choose='YN', text='Y/N', default='False', timeout='10', *, hide=False):  # 按键选择功能
     """
     按键选择功能
     用法：文件名或<import...as...>命令别名.choice('用户可选的按键','显示的文字(显示的文字中不能含有空格)','默认按键选择(可填)','多少秒后默认按键生效(必须先指定默认按键，默认为0)'),'hide=True/False(是否隐藏选项列表)')
@@ -511,7 +552,7 @@ def choice(choose='YN', text='Y/N', default='False', timeout='10', *, hide=False
             raise FunctionSyntaxError(
                 '显示的文字中不能含有空格'
             )
-    if hide is True: 
+    if hide is True:
         choice = choice + choose + ' /N ' + ' /M ' + text
     else:
         choice = choice + choose + ' /M ' + text
@@ -524,7 +565,9 @@ def choice(choose='YN', text='Y/N', default='False', timeout='10', *, hide=False
                 '按键默认值不在设置的按键中'
             )
     return os.system(choice)
-class Cipher: # 加密英文
+
+
+class Cipher:  # 加密英文
     """
     加密英文
     用法：变量 = 文件名或<import...as...>命令别名.Cipher()
@@ -536,31 +579,42 @@ class Cipher: # 加密英文
     注意：本功能只能加密英文
           本功能的加密算法是独立的，所以只有本功能的unlock()才能解密
     """
-    def __init__( self ):
-        self.WordsComparison = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
-        self.NumberComparison = ['а','б','в','г','д','е','ё','ж','з','и','й','к','л','м','н','о','п','р','с','Я','Ч','Ш','Щ','ц','ю','э']
-        self.WordsCapsComparison = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
-        self.NumberCapsComparison = ['α','β','Φ','ε','Λ','γ','Ω','σ','υ','δ','Ъ','×','Γ','Σ','Ψ','Υ','ψ','μ','ω','ξ','Œ','Ð','□','○','∷','θ']
+
+    def __init__(self):
+        self.WordsComparison = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q',
+                                'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+        self.NumberComparison = ['а', 'б', 'в', 'г', 'д', 'е', 'ё', 'ж', 'з', 'и', 'й', 'к', 'л', 'м', 'н', 'о', 'п',
+                                 'р', 'с', 'Я', 'Ч', 'Ш', 'Щ', 'ц', 'ю', 'э']
+        self.WordsCapsComparison = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q',
+                                    'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+        self.NumberCapsComparison = ['α', 'β', 'Φ', 'ε', 'Λ', 'γ', 'Ω', 'σ', 'υ', 'δ', 'Ъ', '×', 'Γ', 'Σ', 'Ψ', 'Υ',
+                                     'ψ', 'μ', 'ω', 'ξ', 'Œ', 'Ð', '□', '○', '∷', 'θ']
+
     def lock(self, text):
         for i in range(26):
             text = text.replace(self.WordsComparison[i], self.NumberComparison[i])
         for i in range(26):
             text = text.replace(self.WordsCapsComparison[i], self.NumberCapsComparison[i])
         return text
+
     def unlock(self, text):
         for i in range(26):
             text = text.replace(self.NumberComparison[i], self.WordsComparison[i])
         for i in range(26):
             text = text.replace(self.NumberCapsComparison[i], self.WordsCapsComparison[i])
         return text
-def mkdir( path ): # 新建文件夹
+
+
+def mkdir(path):  # 新建文件夹
     """
     新建文件夹
     用法：文件名或<import...as...>命令别名.mkdir('文件夹路径')
     如不填写路径，只填写名称，那么默认在同级文件夹下新建
     """
     return os.system('mkdir ' + path)
-def copy(filein, fileout): # 文件复制功能
+
+
+def copy(filein, fileout):  # 文件复制功能
     """
     复制文件
     用法：文件名或<import...as...>命令别名.copy('被复制的文件路径','复制出来的文件路径')")
@@ -568,12 +622,14 @@ def copy(filein, fileout): # 文件复制功能
           你可以更改复制出来的文件的后缀名，但这只限于纯文本')
           对于非纯文本的文件，例如docx，ppt等，因更改后缀而造成的文件损坏、编码缺失等问题，作者概不负责
     """
-    if not find_file(filein,'exist?'):
+    if not find_file(filein, 'exist?'):
         raise FileNotFoundError(
-            '没有名为%s的文件'%filein
+            '没有名为%s的文件' % filein
         )
     return os.system('copy ' + filein + ' ' + fileout + ' ' + '>nul')
-def pause(text='请按任意键继续...'): # 暂停功能
+
+
+def pause(text='请按任意键继续...'):  # 暂停功能
     """
     暂停命令行
     用法：文件名或<import...as...>命令别名.pause('显示的文字')
@@ -582,7 +638,9 @@ def pause(text='请按任意键继续...'): # 暂停功能
     print(text)
     os.system('pause >nul')
     return
-def find_suffix(path, suffix): # 查找指定后缀的文件
+
+
+def find_suffix(path, suffix):  # 查找指定后缀的文件
     """
     查找指定后缀的文件
     用法：文件名或<import...as...>命令别名.find_suffix('文件夹路径','后缀')
@@ -594,30 +652,32 @@ def find_suffix(path, suffix): # 查找指定后缀的文件
     for i in path:
         if i == ' ':
             raise FunctionSyntaxError(
-                '\n路径\n"%s"\n中含有空格'%path
+                '\n路径\n"%s"\n中含有空格' % path
             )
     for i in suffix:
         if i == ' ':
             raise FunctionSyntaxError(
-                '后缀"%s"中含有空格'%suffix
+                '后缀"%s"中含有空格' % suffix
             )
     if not suffix[0] == '.' or '.' in suffix[1:]:
         raise FunctionSyntaxError(
-            '你的后缀"%s"无效，请输入例如".py"一类的后缀'%suffix
+            '你的后缀"%s"无效，请输入例如".py"一类的后缀' % suffix
         )
-    with open(bat,'w',encoding='ansi') as f:
+    with open(bat, 'w', encoding='ansi') as f:
         f.write('@echo off\n')
         f.write('for /r ' + path + ' %%r in (*' + suffix + ') do (\n')
         f.write('    echo %%r>>%tmp%\maker.tmp\n')
         f.write(')')
-    call('%s >nul'%bat)
+    call('%s >nul' % bat)
     os.remove(bat)
-    with open(tmp,'r') as f:
+    with open(tmp, 'r') as f:
         for i in f.readlines():
-            file_list.append(i.replace('\n',''))
+            file_list.append(i.replace('\n', ''))
     os.remove(tmp)
     return file_list
-def update(): # 更新本模块
+
+
+def update():  # 更新本模块
     """
     更新本模块
     用法：文件名或<import...as...>命令别名.update()
@@ -628,7 +688,9 @@ def update(): # 更新本模块
         return
     if os.system("pip install --upgrade easy_functions") == 0:
         print("已是最新版本")
-def getIP(): # 获取本机IP
+
+
+def getIP():  # 获取本机IP
     """
     用法：文件名或<import...as...>命令别名.getIP()
     将返回本机IP
@@ -636,19 +698,23 @@ def getIP(): # 获取本机IP
     hostname = socket.gethostname()
     IP = socket.gethostbyname(hostname)
     return IP
-class Environment: # 操作环境变量
-    def __init__(self, value): # 输入环境变量
+
+
+class Environment:  # 操作环境变量
+    def __init__(self, value):  # 输入环境变量
         self.value = value
         self.bat_path = tempfile.gettempdir() + "\\get_environment.bat"
         self.key_path = tempfile.gettempdir() + "\\key.log"
-    def set(self, key): # 修改环境变量
-        os.system("setx %s %s"%(self.value, key))
-    def get(self): # 获取环境变量的值
+
+    def set(self, key):  # 修改环境变量
+        os.system("setx %s %s" % (self.value, key))
+
+    def get(self):  # 获取环境变量的值
         with open(self.bat_path, "w") as f:
             f.write("")
         with open(self.bat_path, "a") as f:
             f.write("@echo off \n")
-            f.write("echo %s>%s"%(self.value, self.key_path))
+            f.write("echo %s>%s" % (self.value, self.key_path))
             f.flush()
         call(self.bat_path)
         wait(0.5)
@@ -657,35 +723,44 @@ class Environment: # 操作环境变量
         os.remove(self.bat_path)
         os.remove(self.key_path)
         return key
-    def delete(self): # 删除环境变量
-        os.system("setx %s """%self.value)
-def log(): # 更新日志
+
+    def delete(self):  # 删除环境变量
+        os.system("setx %s """ % self.value)
+
+
+def log():  # 更新日志
     """
     显示本模块更新日志
     用法：文件名或<import...as...>命令别名.log()
     """
     start("https://www.kancloud.cn/jerry0940/easy_functions_update_log/2639009")
     return
-def version(): # 版本
+
+
+def version():  # 版本
     """
     显示本模块版本
     用法：文件名或<import...as...>命令别名.version()
     """
     global __version__
-    print('easy_functions版本:%s'%__version__)
-    print('%s个函数'%(__version__[2] + __version__[3]))
-    print('%s个类'%__version__[0])
-    print('%s个微调'%(__version__[5] + __version__[6]))
+    print('easy_functions版本:%s' % __version__)
+    print('%s个函数' % (__version__[2] + __version__[3]))
+    print('%s个类' % __version__[0])
+    print('%s个微调' % (__version__[5] + __version__[6]))
     return
-def help(): # 文件命令功能列表
+
+
+def help():  # 文件命令功能列表
     """
     命令列表功能
     用法：文件名或<import...as...>命令别名.help()
     """
     print('easy_functions版本:', __version__)
-    print('内含%s个函数，%s个类'%(__version__[2] + __version__[3], __version__[0]))
-    print('模块easy_functions可使用的功能为%s'%cmdlist)
+    print('内含%s个函数，%s个类' % (__version__[2] + __version__[3], __version__[0]))
+    print('模块easy_functions可使用的功能为%s' % cmdlist)
     print('列表中以大写字母开头的为类(class)')
     return
+
+
 if __name__ == '__main__':
     help()
