@@ -25,7 +25,7 @@ for i in cmdlist:
     if i.istitle():
         c += 1
 d = len(cmdlist) - c
-__version__ = str(c) + '.' + str(d) + '.' + '85'  # 版本号
+__version__ = str(c) + '.' + str(d) + '.' + '86'  # 版本号
 __author__ = 'Jerry0940'  # 作者
 
 
@@ -649,6 +649,10 @@ def find_suffix(path, suffix):  # 查找指定后缀的文件
     bat = tempfile.gettempdir() + '\\make_file_list.bat'
     tmp = tempfile.gettempdir() + '\\maker.tmp'
     file_list = []
+    with open(bat, "w") as f:
+        f.write("")
+    with open(tmp, "w") as f:
+        f.write("")
     for i in path:
         if i == ' ':
             raise FunctionSyntaxError(
