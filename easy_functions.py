@@ -1,23 +1,25 @@
 ﻿"""声明
-easy_functions是一个简单但实用的Python模块，可以通过import文件里的函数和类来达到简化代码运行的效果
+easy_functions是一个简单但实用的Python模块，可以通过导入文件里的功能来达到简化代码运行的效果
 已经开发了许多功能，目前还在继续开发新的功能
 本模块使用MIT协议
 """
+from distutils.log import INFO
 import os
 import sys
 import time
 import socket
 import tempfile
+import logging
 
 cmdlist = [
     'bigfont', 'literally', 'wait', 'cls',
     'title', 'find_file', 'start', 'call',
     'Vbs', 'color', 'mode', 'shield',
     'choice', 'Cipher', 'mkdir', 'copy',
-    'pause', 'find_suffix', 'help', 'Environment<Beta>',
-    'getIP'
-    , 'version', 'update', 'log'
-]  # 命令列表，以大写字母开头的为类(class)
+    'pause', 'find_suffix', 'help', 'Environment',
+    'getIP', 'Log'
+    , 'version', 'update'
+]  # 命令列表，以大写字母开头的为类
 __all__ = cmdlist
 c = 0
 d = 0
@@ -732,13 +734,31 @@ class Environment:  # 操作环境变量
         os.system("setx %s """ % self.value)
 
 
-def log():  # 更新日志
+class Log:  # 日志功能
     """
-    显示本模块更新日志
-    用法：文件名或<import...as...>命令别名.log()
+    日志写入功能
+    此功能会先在终端打印，然后写入日志
+    下面是一个例子
+    l = Log("A test log.log")      # 在Log的括号中填入日志文件的名称
+    l.write("Hello World", "info") # 使用write函数写入日志，在前一个括号中填入文字，后一个括号中填入错误等级（info/debug/warning/error）
     """
-    start("https://www.kancloud.cn/jerry0940/easy_functions_update_log/2639009")
-    return
+    def __init__(self, logname, *, default_level=logging.INFO, log_format="[%(asctime)s] [%(filename)s/%(levelname)s]: %(message)s"):
+        logging.basicConfig(filename = logname, level = default_level, format = log_format)
+
+    
+    def write(self, words, level=logging.INFO):
+        print(words)
+
+        if level == "info" or logging.INFO:
+            logging.info(words)
+        elif level == "debug" or logging.DEBUG:
+            logging.debug(words)
+        elif level == "warning" or logging.WARNING:
+            logging.warning(words)
+        elif level == "error" or logging.ERROR:
+            logging.error(words)
+        else:
+            logging.critical(words)
 
 
 def version():  # 版本
