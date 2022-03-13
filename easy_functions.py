@@ -3,7 +3,6 @@ easy_functions是一个简单但实用的Python模块，可以通过导入文件
 已经开发了许多功能，目前还在继续开发新的功能
 本模块使用MIT协议
 """
-from distutils.log import INFO
 import os
 import sys
 import time
@@ -20,6 +19,8 @@ cmdlist = [
     'getIP', 'Log'
     , 'version', 'update'
 ]  # 命令列表，以大写字母开头的为类
+
+
 __all__ = cmdlist
 c = 0
 d = 0
@@ -27,7 +28,9 @@ for i in cmdlist:
     if i.istitle():
         c += 1
 d = len(cmdlist) - c
-__version__ = str(c) + '.' + str(d) + '.' + '86'  # 版本号
+
+
+__version__ = str(c) + '.' + str(d) + '.' + '87'  # 版本号
 __author__ = 'Jerry0940'  # 作者
 
 
@@ -742,23 +745,36 @@ class Log:  # 日志功能
     l = Log("A test log.log")      # 在Log的括号中填入日志文件的名称
     l.write("Hello World", "info") # 使用write函数写入日志，在前一个括号中填入文字，后一个括号中填入错误等级（info/debug/warning/error）
     """
-    def __init__(self, logname, *, default_level=logging.INFO, log_format="[%(asctime)s] [%(filename)s/%(levelname)s]: %(message)s"):
-        logging.basicConfig(filename = logname, level = default_level, format = log_format)
+    def __init__(self, logname, *, default_level=logging.INFO, log_format="[%(asctime)s] [%(name)s/%(levelname)s]: %(message)s"):
+        self.main_file = sys.modules["__main__"]
+        self.logname = logname
+        try:
+            logging.basicConfig(filename = logname, level = default_level, format = log_format)
+        except AttributeError:
+            raise ModuleNotFoundError("请先导入logging模块")
 
     
     def write(self, words, level=logging.INFO):
         print(words)
+        
+        try:
+            if level == "info" or logging.INFO:
+                logging.info(words)
+            elif level == "debug" or logging.DEBUG:
+                logging.debug(words)
+            elif level == "warning" or logging.WARNING:
+                logging.warning(words)
+            elif level == "error" or logging.ERROR:
+                logging.error(words)
+            else:
+                logging.critical(words)
+        except AttributeError:
+            raise ModuleNotFoundError("请先导入logging模块")
 
-        if level == "info" or logging.INFO:
-            logging.info(words)
-        elif level == "debug" or logging.DEBUG:
-            logging.debug(words)
-        elif level == "warning" or logging.WARNING:
-            logging.warning(words)
-        elif level == "error" or logging.ERROR:
-            logging.error(words)
-        else:
-            logging.critical(words)
+
+    def clear(self):
+        with open(self.logname, "w") as f:
+            f.write("")
 
 
 def version():  # 版本
