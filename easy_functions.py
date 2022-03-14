@@ -30,7 +30,7 @@ for i in cmdlist:
 d = len(cmdlist) - c
 
 
-__version__ = str(c) + '.' + str(d) + '.' + '87'  # 版本号
+__version__ = str(c) + '.' + str(d) + '.' + '88'  # 版本号
 __author__ = 'Jerry0940'  # 作者
 
 
@@ -252,7 +252,7 @@ def start(path):  # 启动
     用法：文件名或<import...as...>命令别名.start('路径')
     此命令存在的意义是为了运行除Python文件以外的其他文件或打开一个文件夹
     """
-    return os.system("start " + path)
+    return os.system("start %s >nul" % path)
 
 
 def call(path):  # 文件调用
