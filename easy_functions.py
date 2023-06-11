@@ -3,75 +3,18 @@ easy_functions是一个简单的模块，可以通过里面提供的方法来简
 本模块使用MIT协议
 """
 import os
-import time
 import socket
 import tempfile
 import logging
 
 __all__ = [
-    "cls", "title", "find_file", "start",
-    "call", "Vbs", "mode", "shield",
-    "choice", "Cipher", "pause", "find_suffix",
-    "Environment", "get_IP", "Log"
+    "start", "call", "find_file", "Vbs",
+    "mode", "ban", "choice", "Cipher",
+    "pause", "get_IP", "Log"
 ]
 
-__version__ = "5.0.0"
+__version__ = "6.0.0"
 __author__ = "Jerry0940"
-
-
-class FunctionSyntaxError(Exception):
-    pass
-
-
-def cls():
-    """清除命令行"""
-    os.system("cls")
-
-
-def title(title):
-    """
-    更改命令行标题
-    :param title:标题
-    """
-    os.system("title " + title)
-
-
-def find_file(file, mode):
-    """
-    文件查找功能
-
-    参数mode共有两种可填
-
-    1."exist?"判断文件是否存在，返回布尔值
-
-    2."import?"判断文件是否可以被导入，返回布尔值
-
-    :param file:被检测的文件
-    :param mode:查找模式
-    """
-    if not type(file) is str:
-        raise FunctionSyntaxError(
-            "需要输入字符串，而你输入的是%s" % type(file)
-        )
-    if mode == "exist?":
-        try:
-            f = open(file, "r")
-        except FileNotFoundError:
-            return False
-        else:
-            f.close()
-            return True
-    elif mode == "import?":
-        try:
-            __import__(file)
-        except ModuleNotFoundError:
-            return False
-        else:
-            return True
-    else:
-        raise FunctionSyntaxError(
-            '没有模式"%s"' % mode
-        )
 
 
 def start(path):
@@ -97,6 +40,38 @@ def call(path):
     :param path:文件路径
     """
     return os.system("call %s >nul" % path)
+
+
+def find_file(file, mode):
+    """
+    文件查找功能
+
+    参数mode共有两种可填
+
+    1."exist?"判断文件是否存在，返回布尔值
+
+    2."import?"判断文件是否可以被导入，返回布尔值
+
+    :param file:被检测的文件
+    :param mode:查找模式
+    """
+    if not type(file) is str:
+        raise SyntaxError(
+            "需要输入字符串，而你输入的是%s" % type(file)
+        )
+    if mode == "exist?":
+        return os.path.exists(file)
+    elif mode == "import?":
+        try:
+            __import__(file)
+        except ModuleNotFoundError:
+            return False
+        else:
+            return True
+    else:
+        raise SyntaxError(
+            '没有模式"%s"' % mode
+        )
 
 
 class Vbs:
@@ -240,25 +215,22 @@ def mode(cols, lines):
     return os.system("mode con cols=" + str(cols) + " lines=" + str(lines))
 
 
-def shield(words, WordsBlackList: list):
+def ban(words: str, WordsBlackList: list):
     """
     词语屏蔽功能
     :param words:被检测的文字
     :param WordsBlackList:文字黑名单，会将此列表中出现的词语全部替换为"*"
     """
-    A_list = ["*", "**", "***", "****", "*****", "******", "*******", "********", "*********", "**********",
-              "***********", "************"]
-    try:
-        WordsBlackList.append("test")
-    except AttributeError as e:
-        raise FunctionSyntaxError(
-            "功能shield的词语黑名单需要传入列表"
-        ) from e
-    else:
-        WordsBlackList.pop()
-        for i in WordsBlackList:
-            length = len(i) - 1
-            words = words.replace(i, A_list[length])
+    ban_list = []
+    for i in range(len(words)):
+        ban_list.append("*" * (i + 1))
+    if type(WordsBlackList) is not list:
+        raise SyntaxError(
+            "词语黑名单需要传入列表类型"
+        )
+    for i in WordsBlackList:
+        length = len(i) - 1
+        words = words.replace(i, ban_list[length])
     return words
 
 
@@ -295,7 +267,7 @@ def choice(choose="YN", text="Y/N", default=False, timeout="10", *, hide=False):
     choice = choice + " /C "
     for i in range(len(text)):
         if text[i] == " ":
-            raise FunctionSyntaxError(
+            raise SyntaxError(
                 "显示的文字中不能含有空格"
             )
     if hide:
@@ -307,7 +279,7 @@ def choice(choose="YN", text="Y/N", default=False, timeout="10", *, hide=False):
             choice = choice + " /D " + default
             choice = choice + " /T " + timeout
         elif default not in choose:
-            raise FunctionSyntaxError(
+            raise SyntaxError(
                 "按键默认值不在设置的按键中"
             )
     return os.system(choice)
@@ -332,9 +304,11 @@ class Cipher:
         :param text:被加密的英文
         """
         for i in range(26):
-            text = text.replace(self.WordsComparison[i], self.NumberComparison[i])
+            text = text.replace(
+                self.WordsComparison[i], self.NumberComparison[i])
         for i in range(26):
-            text = text.replace(self.WordsCapsComparison[i], self.NumberCapsComparison[i])
+            text = text.replace(
+                self.WordsCapsComparison[i], self.NumberCapsComparison[i])
         return text
 
     def unlock(self, text: str):
@@ -343,9 +317,11 @@ class Cipher:
         :param text:被解密的英文
         """
         for i in range(26):
-            text = text.replace(self.NumberComparison[i], self.WordsComparison[i])
+            text = text.replace(
+                self.NumberComparison[i], self.WordsComparison[i])
         for i in range(26):
-            text = text.replace(self.NumberCapsComparison[i], self.WordsCapsComparison[i])
+            text = text.replace(
+                self.NumberCapsComparison[i], self.WordsCapsComparison[i])
         return text
 
 
@@ -359,93 +335,11 @@ def pause(text="请按任意键继续..."):
     return
 
 
-def find_suffix(path, suffix):
-    """
-    查找指定后缀的文件
-
-    将遍历文件夹中所有指定后缀的文件（包括子目录），以列表形式返回
-    :param path:文件路径
-    :param suffix:文件后缀
-    """
-    bat = tempfile.gettempdir() + "\\make_file_list.bat"
-    tmp = tempfile.gettempdir() + "\\maker.tmp"
-    file_list = []
-    with open(bat, "w") as f:
-        f.write("")
-    with open(tmp, "w") as f:
-        f.write("")
-    for i in path:
-        if i == " ":
-            raise FunctionSyntaxError(
-                '\n路径\n"%s"\n中含有空格' % path
-            )
-    for i in suffix:
-        if i == " ":
-            raise FunctionSyntaxError(
-                '后缀"%s"中含有空格' % suffix
-            )
-    if not suffix[0] == "." or "." in suffix[1:]:
-        raise FunctionSyntaxError(
-            '你的后缀"%s"无效，请输入例如".py"一类的后缀' % suffix
-        )
-    with open(bat, "w", encoding="ansi") as f:
-        f.write("@echo off\n")
-        f.write("for /r " + path + " %%r in (*" + suffix + ") do (\n")
-        f.write("    echo %%r>>%tmp%\maker.tmp\n")
-        f.write(")")
-    call("%s >nul" % bat)
-    os.remove(bat)
-    with open(tmp, "r") as f:
-        for i in f.readlines():
-            file_list.append(i.replace("\n", ""))
-    os.remove(tmp)
-    return file_list
-
-
 def get_IP():
     """返回本机IP"""
     hostname = socket.gethostname()
     IP = socket.gethostbyname(hostname)
     return IP
-
-
-class Environment:
-    """操作系统环境变量，还在开发中"""
-
-    def __init__(self, value):
-        """
-        :param value:环境变量的名称
-        """
-        self.value = value
-        self.bat_path = tempfile.gettempdir() + "\\get_environment.bat"
-        self.key_path = tempfile.gettempdir() + "\\key.log"
-
-    def set(self, key):
-        """
-        修改环境变量
-        :param key:环境变量的值
-        """
-        os.system("setx %s %s" % (self.value, key))
-
-    def get(self):
-        """获取环境变量的值"""
-        with open(self.bat_path, "w") as f:
-            f.write("")
-        with open(self.bat_path, "a") as f:
-            f.write("@echo off \n")
-            f.write("echo %s>%s" % (self.value, self.key_path))
-            f.flush()
-        call(self.bat_path)
-        time.sleep(0.5)
-        with open(self.key_path, "r") as f:
-            key = f.read().strip("\n")
-        os.remove(self.bat_path)
-        os.remove(self.key_path)
-        return key
-
-    def delete(self):
-        """删除环境变量"""
-        os.system("setx %s """ % self.value)
 
 
 class Log:
@@ -458,7 +352,8 @@ class Log:
         :param default_level:默认日志等级
         :param log_format:日志格式
         """
-        logging.basicConfig(filename=logname, level=default_level, format=log_format)
+        logging.basicConfig(
+            filename=logname, level=default_level, format=log_format)
 
     def write(self, words, level=logging.INFO, log_function=print):
         """
